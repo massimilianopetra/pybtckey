@@ -45,7 +45,7 @@ def base58decode(s):
     result = 0
     for i in range(0, len(s)):
         result = result * 58 + ALPHABET.index(s[i])
-    return bytes(result)
+    return result.to_bytes(37, 'big')
 
 def base58CheckEncode(a,v):
     v = a+v
@@ -80,6 +80,11 @@ def pubKeyToAddr(s):
     ripemd160 = hashlib.new('ripemd160')
     ripemd160.update(hashlib.sha256(bytes.fromhex(s)).digest())
     return "1"+base58CheckEncode(bytes([0x00]), ripemd160.digest())
+
+def ripemd160(s):
+    ripemd160 = hashlib.new('ripemd160')
+    ripemd160.update(hashlib.sha256(bytes.fromhex(s)).digest())
+    return ripemd160.digest().hex()
 
 if __name__ == '__main__':
     hexstring= "00010966776006953D5567439E5E39F86A0D273BEED61967F6"

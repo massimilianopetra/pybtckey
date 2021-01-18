@@ -81,44 +81,17 @@ def showGui(priv,wif,pub,address):
 
     mainloop( )
 
-
-# Test key from book Mastering Bitcoin page 78
-print("--- Test Key ---")
-
-private_key = "3aba4162c7251c891207b747840551a71939b0de081f85c4e44cf7c13e41daa6"
-wif_key = bitcoin_utils.privateKeyToWif(private_key)
-pub_key = bitcoin_utils.privateKeyToPublicKey(private_key)
-btc_address = bitcoin_utils.pubKeyToAddr(pub_key)
-
-print ("Private Key: %s" % private_key)
-print ("Wif Key: %s" % wif_key)
-print ("Public Key: %s" % pub_key)
-print ("BTC Address: %s" % btc_address)
-
-if wif_key == "5JG9hT3beGTJuUAmCQEmNaxAuMacCTfXuw1R3FCXig23RQHMr4K":
-    print ("Wif Key: Test OK")
-else:
-    print ("Wif Key: Test Failed")
-    
-if pub_key == "045c0de3b9c8ab18dd04e3511243ec2952002dbfadc864b9628910169d9b9b00ec243bcefdd4347074d44bd7356d6a53c495737dd96295e2a9374bf5f02ebfc176":
-    print ("Public Key: Test OK")    
-else:
-    print ("Public Key: Test Failed")
-
-if btc_address == "1thMirt546nngXqyPEz532S8fLwbozud8":
-    print ("BTC Address: Test OK")
-else:
-    print ("BTC Address: Test Failed")    
-
-
-print()
-print()
-
 # PrivateKey with insicure random generator
 print("--- New Random Key Generator ---")
 
-private_key = bitcoin_utils.generatePrivateKey()
+with open("key.txt") as f:
+    k = f.readline()
+private_key = bitcoin_utils.base58CheckDecode(k)[1:].hex()
 wif_key = bitcoin_utils.privateKeyToWif(private_key)
+if k == wif_key:
+    print("Wif Check OK")
+else:
+    print("Wif Check FAIL")
 pub_key = bitcoin_utils.privateKeyToPublicKey(private_key)
 ripemd = bitcoin_utils.ripemd160(pub_key)
 btc_address = bitcoin_utils.pubKeyToAddr(pub_key)
