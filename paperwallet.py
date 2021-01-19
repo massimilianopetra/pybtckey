@@ -1,5 +1,5 @@
 """
- * keygenerator.py
+ * paperwallet.py
  *
  * Author: Massimiliano Petra <massimiliano.petra@gmail.com> January, 2021
  *
@@ -32,7 +32,7 @@ from tkinter import *
 def showGui(priv,wif,pub,address):
 
     master = Tk()
-    master.title("BTC Key Generator")
+    master.title("Python BTC Paper Wallet")
      
     Label(master, text="Private Key").grid(row=0)
     Label(master, text="Wif Key").grid(row=1)
@@ -127,8 +127,9 @@ btc_address = bitcoin_utils.pubKeyToAddr(pub_key)
 print ("Private Key: %s" % private_key)
 print ("Wif Key: %s" % wif_key)
 print ("Public Key: %s" % pub_key)
-print ("BTC Address: %s" % btc_address)
 print ("Ripemd160: %s" % ripemd)
+print ("BTC Address: %s" % btc_address)
+
 
 
 showGui(private_key,wif_key,pub_key,btc_address)

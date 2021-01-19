@@ -70,7 +70,15 @@ def generatePrivateKey():
 
 def privateKeyToWif(key_hex):    
     return base58CheckEncode(bytes([0x80]),bytes.fromhex(key_hex))
-    
+
+def integerToWif(i):    
+    return base58CheckEncode(bytes([0x80]),i.to_bytes(32, 'big'))
+
+def integerToPublicKey(i):
+    sk = ecdsa.SigningKey.from_string(i.to_bytes(32, 'big'), curve=ecdsa.SECP256k1)
+    vk = sk.verifying_key
+    return '04'+vk.to_string().hex()
+
 def privateKeyToPublicKey(key_hex):
     sk = ecdsa.SigningKey.from_string(bytes.fromhex(key_hex), curve=ecdsa.SECP256k1)
     vk = sk.verifying_key

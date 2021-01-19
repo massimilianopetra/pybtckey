@@ -1,5 +1,5 @@
 """
- * keygenerator.py
+ * int2address.py
  *
  * Author: Massimiliano Petra <massimiliano.petra@gmail.com> January, 2021
  *
@@ -32,7 +32,7 @@ from tkinter import *
 def showGui(priv,wif,pub,address):
 
     master = Tk()
-    master.title("BTC Key Generator")
+    master.title("Integer To Address Generator")
      
     Label(master, text="Private Key").grid(row=0)
     Label(master, text="Wif Key").grid(row=1)
@@ -81,27 +81,21 @@ def showGui(priv,wif,pub,address):
 
     mainloop( )
 
-# PrivateKey with insicure random generator
-print("--- New Random Key Generator ---")
+# PrivateKey from integer
+print("--- Integer To Address Generator ---")
 
-with open("key.txt") as f:
-    k = f.readline()
-private_key = bitcoin_utils.base58CheckDecode(k)[1:].hex()
-wif_key = bitcoin_utils.privateKeyToWif(private_key)
-if k == wif_key:
-    print("Wif Check OK")
-else:
-    print("Wif Check FAIL")
-pub_key = bitcoin_utils.privateKeyToPublicKey(private_key)
-ripemd = bitcoin_utils.ripemd160(pub_key)
+private_key = 1
+wif_key = bitcoin_utils.integerToWif(private_key)
+pub_key = bitcoin_utils.integerToPublicKey(private_key)
+ripemid = bitcoin_utils.ripemd160(pub_key)
 btc_address = bitcoin_utils.pubKeyToAddr(pub_key)
 
 
-print ("Private Key: %s" % private_key)
+print ("Private Key: %d" % private_key)
 print ("Wif Key: %s" % wif_key)
 print ("Public Key: %s" % pub_key)
+print ("Ripemid160: %s" % ripemid)
 print ("BTC Address: %s" % btc_address)
-print ("Ripemd160: %s" % ripemd)
 
 
 showGui(private_key,wif_key,pub_key,btc_address)
